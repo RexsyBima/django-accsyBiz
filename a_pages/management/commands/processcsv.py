@@ -13,12 +13,13 @@ class Command(BaseCommand):
         df = pl.read_csv("Business_Licenses_-_Current_Active_20250908.csv", dtypes=dtypes) # pyright: ignore[reportCallIssue]
         print(df.columns)
         for i, row in enumerate(df.iter_rows(named=True)):
-            if i > 10:
+            if i > 1000:
                 break
-            if row["LATITUDE"] == "" or row["LONGITUDE"] == "" or row["LATITUDE"] is None or row["LONGITUDE"] is None:
+            if row["LATITUDE"] == "" or row["LONGITUDE"] == "" or row["BUSINESS ACTIVITY"] == "" or row["LATITUDE"] is None or row["BUSINESS ACTIVITY"] is None or row["LONGITUDE"] is None:
                 continue
             place, created = Place.objects.get_or_create(
                 name=row["DOING BUSINESS AS NAME"],
+                business_category = row["BUSINESS ACTIVITY"],
                 legal_name=row["LEGAL NAME"],
                 address=row["ADDRESS"],
                 city=row["CITY"] or "Chicago",

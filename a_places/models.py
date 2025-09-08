@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Place(models.Model):
     name = models.CharField(max_length=200)  # from DOING BUSINESS AS NAME
+    business_category = models.CharField(max_length=200)  # from DOING BUSINESS AS NAME
     legal_name = models.CharField(max_length=200, blank=True)
     address = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=100, default="Chicago")

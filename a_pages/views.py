@@ -15,6 +15,6 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['places'] = list(Place.objects.values('latitude', 'longitude', 'name', 'category'))
+        context['places'] = list(Place.objects.values('id','latitude', 'longitude', 'name', 'category'))
         print(context['places'])    
         return context
