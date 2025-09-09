@@ -1,4 +1,6 @@
+from enum import unique
 from django.db import models
+from a_features.models import Feature
 
 # Create your models here.
 class Place(models.Model):
@@ -22,3 +24,13 @@ class Place(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.latitude} {self.longitude}"
+
+class PlaceFeature(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='features')
+    feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('place', 'feature')
+
+    def __str__(self):
+        return f"{self.place.name} - {self.feature.code}"
