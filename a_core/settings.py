@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'a_places',
     'a_features',
     'a_posts',
-    'django_ckeditor_5'
+    'django_ckeditor_5',
+    'django_cotton'
 ]
 
 MIDDLEWARE = [
