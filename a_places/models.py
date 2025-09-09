@@ -23,7 +23,7 @@ class Place(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} {self.latitude} {self.longitude}"
+        return f"{self.id}-{self.name} {self.latitude} {self.longitude}" # pyright: ignore[reportAttributeAccessIssue]
 
 class PlaceFeature(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='features')
