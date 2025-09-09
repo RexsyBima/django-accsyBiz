@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'a_pages',
     'a_places',
     'a_features',
+    'a_posts',
 ]
 
 MIDDLEWARE = [
