@@ -20,7 +20,7 @@ class PostFeature(models.Model):
 
 
 class CommentPlace(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='post_comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = CKEditor5Field('Text', config_name='extends', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
