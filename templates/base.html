@@ -10,6 +10,7 @@
  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     {% block head %}
     <link rel="stylesheet" href="/static/style.css">
     {% endblock %}
@@ -18,14 +19,8 @@
 </head>
 <body>
     <header>
-        <!-- Add a common header here, like navigation -->
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
+        <!-- Using cotton navbar component -->
+        <c-navbar />
     </header>
 
     <main>
@@ -35,8 +30,8 @@
     </main>
 
     <footer>
-        <!-- Add a common footer here -->
-        <p>&copy; 2025 Your Company. All rights reserved.</p>
+        <!-- Using cotton footer component -->
+        <c-footer />
     </footer>
 
     {% block scripts %}

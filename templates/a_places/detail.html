@@ -39,11 +39,14 @@
         <p>total vote: {{feature.total_votes}}</p>
         <form method="POST" action="{% url 'handle_vote' place.id %}?feature_id={{feature.id}}">
             {% csrf_token %}
-            <button type="submit" name="vote" value="upvote" class="btn btn-success">Upvote</button>
-            <button type="submit" name="vote" value="neutral" class="btn btn-danger">Become Neutral</button>
-            <button type="submit" name="vote" value="downvote" class="btn btn-danger">Downvote</button>
+            <button type="submit" name="vote" value="upvote" class="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 transition active:scale-110">Upvote</button>
+            <button type="submit" name="vote" value="neutral" class="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 transition active:scale-110">Become Neutral</button>
+            <button type="submit" name="vote" value="downvote" class="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 transition active:scale-110">Downvote</button>
         </form>
-
+        {% endfor %}
+        {% for comment in comments  %}
+        {{comment.body|safe}}
+        
         {% endfor %}
 
         <a href="{% url 'comment_form' place.id %}">Post Comment Here</a>

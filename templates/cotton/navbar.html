@@ -1,0 +1,75 @@
+<nav class="bg-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between">
+      <div class="flex space-x-7">
+        <div>
+          <!-- Website Logo -->
+          <a href="/" class="flex items-center py-4">
+            <span class="font-semibold text-gray-500 text-lg">AccsyBiz</span>
+          </a>
+        </div>
+        
+        <!-- Primary Navbar items -->
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="/" class="py-4 px-2 text-green-500 border-b-2 border-green-500 font-semibold">Home</a>
+          <a href="/places/" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Places</a>
+          <a href="/features/" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Features</a>
+          <a href="/posts/" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Posts</a>
+        </div>
+      </div>
+      
+      <!-- Secondary Navbar items -->
+      <div class="hidden md:flex items-center space-x-3">
+        {% if user.is_authenticated %}
+          <h1 class="py-2 px-3 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Hi, {{ user.username }}</h1>
+          <a href="/accounts/logout/" class="py-2 px-3 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">Logout</a>
+        {% else %}
+          <a href="/accounts/login/" class="py-2 px-3 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Login</a>
+          <a href="/accounts/signup/" class="py-2 px-3 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">Signup</a>
+        {% endif %}
+      </div>
+      
+      <!-- Mobile menu button -->
+      <div class="md:hidden flex items-center">
+        <button class="outline-none mobile-menu-button">
+          <svg class="w-6 h-6 text-gray-500 hover:text-green-500"
+            x-show="!showMenu"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div class="hidden mobile-menu">
+    <ul class="">
+      <li><a href="/" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
+      <li><a href="/places/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Places</a></li>
+      <li><a href="/features/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Features</a></li>
+      <li><a href="/posts/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Posts</a></li>
+      
+      {% if user.is_authenticated %}
+        <li><a href="/accounts/profile/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">{{ user.username }}</a></li>
+        <li><a href="/accounts/logout/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Logout</a></li>
+      {% else %}
+        <li><a href="/accounts/login/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Login</a></li>
+        <li><a href="/accounts/signup/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Signup</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  
+  <script>
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+      document.querySelector('.mobile-menu').classList.toggle('hidden');
+    });
+  </script>
+</nav>
