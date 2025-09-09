@@ -8,6 +8,8 @@ class PostFeature(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='post_features')
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # TODO: add new body field with ckeditor
+    # body 
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
