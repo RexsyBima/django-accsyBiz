@@ -33,7 +33,17 @@
         <p>{{ feature }}</p>
         {% endfor %}
         {% for feature in features_posts%}
-        <p>{{ feature }}</p>
+        <p>{{ feature.user }} says</p>
+        <p>{{ feature.feature }}</p>
+        <p>{{ feature.body_data }}</p>
+        <p>total vote: {{feature.total_votes}}</p>
+        <form method="POST" action="{% url 'handle_vote' place.id %}?feature_id={{feature.id}}">
+            {% csrf_token %}
+            <button type="submit" name="vote" value="upvote" class="btn btn-success">Upvote</button>
+            <button type="submit" name="vote" value="neutral" class="btn btn-danger">Become Neutral</button>
+            <button type="submit" name="vote" value="downvote" class="btn btn-danger">Downvote</button>
+        </form>
+
         {% endfor %}
 
         <a href="{% url 'comment_form' place.id %}">Post Comment Here</a>
