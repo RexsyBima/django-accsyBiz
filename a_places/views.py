@@ -11,4 +11,5 @@ class PlaceGetDetail(DetailView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['features'] = context['place'].features.all()
+        context['features_posts'] = context['place'].post_features.all()
         return  context

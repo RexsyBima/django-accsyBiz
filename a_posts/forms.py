@@ -10,3 +10,12 @@ class PostFeatureForm(forms.ModelForm):
         widgets = {
             'body': CKEditor5Widget(config_name='extends'),
         }
+
+
+class CommentPlaceForm(forms.ModelForm):
+    class Meta:
+        model = CommentPlace
+        fields = ['body']
+        widgets = {
+            'body': CKEditor5Widget(config_name='extends'),
+        }
