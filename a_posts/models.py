@@ -56,5 +56,5 @@ class CommentPlace(models.Model):
 
 
     def __str__(self):
-        return f"{self.place.name} - {self.feature.code} by {self.user.username}" # pyright: ignore[reportAttributeAccessIssue]
+        return f"{self.place.name} - by {self.user.username}" # pyright: ignore[reportAttributeAccessIssue]
 
