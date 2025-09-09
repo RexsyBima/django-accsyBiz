@@ -24,3 +24,5 @@ class Command(BaseCommand):
         for code, label in FEATURES:
             Feature.objects.get_or_create(code=code, defaults={"label": label})
         self.stdout.write(self.style.SUCCESS("Seeded features"))
+
+
