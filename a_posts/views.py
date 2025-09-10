@@ -1,4 +1,4 @@
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseBadRequest
 from vote.models import UP, DOWN
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
@@ -67,3 +67,11 @@ def vote(request: HttpRequest, pk):
                 messages.success(request, f'This feature has been added to the place features list!')
         return redirect('place_detail', pk=pk)
     return redirect('place_detail', pk=pk)
+
+@login_required
+def delete_comment(request : HttpRequest, pk):
+    if request.method == 'POST':
+        CommentPlace.objects.get(id=pk,user=request.user).delete()
+        messages.success(request, 'Comment has been successfully deleted')
+        return redirect('place_detail', pk=request.GET.get("placeid"))
+    return HttpResponseBadRequest("Bad Request")

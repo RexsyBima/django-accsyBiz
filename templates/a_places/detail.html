@@ -30,8 +30,11 @@
             </div>
         </div>
         <div class="mt-6 space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Verified Features</h2>
+            </div>
             {% for feature in features %}
-                <p class="p-4 bg-gray-100 rounded">{{ feature }}</p>
+                <p class="p-4 bg-gray-100 rounded">{{ feature.feature.label }}</p>
             {% endfor %}
         </div>
         <div class="mt-6 space-y-6">
@@ -62,6 +65,12 @@
                     <div>
                         {{ comment.body|safe }}
                     </div>
+                {% if user == comment.user %}
+                <form method="POST" action="{% url 'delete_comment' comment.id %}?placeid={{ place.id }}" class="mt-2 flex space-x-2">
+                    {% csrf_token %}
+                    <button type="submit" name="vote" value="upvote" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Delete Comment</button>
+                </form>
+                {% endif %}
                 </div>
             {% endfor %}
         </div>
