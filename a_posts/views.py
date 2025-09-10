@@ -1,4 +1,7 @@
 from django.http import HttpRequest
+from vote.models import UP, DOWN
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required 
 from django.contrib import messages
 from a_places.models import Place
 from django.shortcuts import get_object_or_404, redirect, render
@@ -39,20 +42,23 @@ def feature_form(request : HttpRequest, pk):
     }
     return render(request, 'a_posts/feature_form.html', context)
 
+@login_required
 def vote(request: HttpRequest, pk):
     if request.method == 'POST':
-        value = 0
+        post_feature = get_object_or_404(PostFeature, id=request.GET.get("feature_id"))
         match request.POST.get('vote'):
             case 'downvote':
+                if post_feature.votes.exists(request.user.id, action=DOWN): # pyright: ignore[reportAttributeAccessIssue]
+                    messages.error(request, 'You have already downvoted this feature.')
+                    return redirect('place_detail', pk=pk)
                 messages.success(request, 'Downvote success')
-                value = -1
-            case 'neutral':
-                messages.success(request, 'Neutral vote success')
-                value = 0
+                post_feature.votes.down(request.user.id) # pyright: ignore[reportAttributeAccessIssue]
             case 'upvote':
+                if post_feature.votes.exists(request.user.id, action=UP): # pyright: ignore[reportAttributeAccessIssue]
+                    messages.error(request, 'You have already upvoted this feature.')
+                    return redirect('place_detail', pk=pk)
+                post_feature.votes.up(request.user.id) # pyright: ignore[reportAttributeAccessIssue]
                 messages.success(request, 'Upvote success')
-                value = 1
-        post_feature = get_object_or_404(PostFeature, id=request.GET.get("feature_id"))
         # TODO: handle if the post_feature got more than 3 upvotes
         # # vote, created = PostFeatureVote.objects.get_or_create(post_feature=post_feature, user=request.user)
         # if created:
