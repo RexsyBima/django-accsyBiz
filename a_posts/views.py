@@ -2,7 +2,7 @@ from django.http import HttpRequest
 from django.contrib import messages
 from a_places.models import Place
 from django.shortcuts import get_object_or_404, redirect, render
-from a_posts.models import PostFeature, CommentPlace, PostFeatureVote
+from a_posts.models import PostFeature, CommentPlace
 from .forms import PostFeatureForm, CommentPlaceForm
 from django.shortcuts import render
 from django.views.generic import CreateView
@@ -54,13 +54,13 @@ def vote(request: HttpRequest, pk):
                 value = 1
         post_feature = get_object_or_404(PostFeature, id=request.GET.get("feature_id"))
         # TODO: handle if the post_feature got more than 3 upvotes
-        vote, created = PostFeatureVote.objects.get_or_create(post_feature=post_feature, user=request.user)
-        if created:
-            vote.value = value
-            vote.save()
-        else:
-            vote.value = value
-            vote.save()
-            messages.success(request, 'Vote updated successfully.')
+        # # vote, created = PostFeatureVote.objects.get_or_create(post_feature=post_feature, user=request.user)
+        # if created:
+        #     vote.value = value
+        #     vote.save()
+        # else:
+        #     vote.value = value
+        #     vote.save()
+        #     messages.success(request, 'Vote updated successfully.')
         return redirect('place_detail', pk=pk)
     return redirect('place_detail', pk=pk)
