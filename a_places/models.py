@@ -1,5 +1,6 @@
 from enum import unique
 from django.db import models
+from django.shortcuts import get_list_or_404
 from a_features.models import Feature
 
 # Create your models here.
@@ -22,12 +23,20 @@ class Place(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_features(self):
+        try:
+            data = get_list_or_404(PlaceFeature, place=self)
+            return data
+        except:
+            return None
+
     def __str__(self):
         return f"{self.id}-{self.name} {self.latitude} {self.longitude}" # pyright: ignore[reportAttributeAccessIssue]
 
 class PlaceFeature(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='features')
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
+
 
     class Meta:
         unique_together = ('place', 'feature')

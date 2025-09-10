@@ -12,6 +12,7 @@ from django.views.generic import CreateView
 
 # Create your views here.
 
+@login_required
 def comment_form(request: HttpRequest, pk):
     if request.method == 'POST':
         data = CommentPlaceForm(request.POST)
@@ -27,6 +28,7 @@ def comment_form(request: HttpRequest, pk):
     }
     return render(request, 'a_posts/feature_form.html', context)
 
+@login_required
 def feature_form(request : HttpRequest, pk):
     if request.method == 'POST':
         data = PostFeatureForm(request.POST)

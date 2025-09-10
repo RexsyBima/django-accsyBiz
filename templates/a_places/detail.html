@@ -1,56 +1,74 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container mt-4">
+    <div class="container mx-auto p-6">
         {% if messages %}
-            <ul class="messages">
+            <ul class="mb-4">
                 {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
+                    <li class="p-2 rounded {{ message.tags }}">{{ message }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
-        <h1>{{ place.name }}</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <p><strong>Legal Name:</strong> {{ place.legal_name|default:"N/A" }}</p>
-                <p><strong>Business Activity:</strong> {{ place.business_category|default:"N/A" }}</p>
-                <p><strong>Address:</strong> {{ place.address|default:"N/A" }}</p>
-                <p><strong>City:</strong> {{ place.city }}</p>
-                <p><strong>State:</strong> {{ place.state }}</p>
-                <p><strong>ZIP Code:</strong> {{ place.zip_code|default:"N/A" }}</p>
-                <p><strong>Category:</strong> {{ place.category|default:"N/A" }}</p>
-                <p><strong>License Status:</strong> {{ place.license_status|default:"N/A" }}</p>
+        <h1 class="text-3xl font-bold mb-6">{{ place.name }}</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <p><span class="font-medium">Legal Name:</span> {{ place.legal_name|default:"N/A" }}</p>
+                <p><span class="font-medium">Business Activity:</span> {{ place.business_category|default:"N/A" }}</p>
+                <p><span class="font-medium">Address:</span> {{ place.address|default:"N/A" }}</p>
+                <p><span class="font-medium">City:</span> {{ place.city }}</p>
+                <p><span class="font-medium">State:</span> {{ place.state }}</p>
+                <p><span class="font-medium">ZIP Code:</span> {{ place.zip_code|default:"N/A" }}</p>
+                <p><span class="font-medium">Category:</span> {{ place.category|default:"N/A" }}</p>
+                <p><span class="font-medium">License Status:</span> {{ place.license_status|default:"N/A" }}</p>
             </div>
-            <div class="col-md-6">
+            <div class="space-y-4">
                 {% if place.latitude and place.longitude %}
-                    <p><strong>Latitude:</strong> {{ place.latitude }}</p>
-                    <p><strong>Longitude:</strong> {{ place.longitude }}</p>
+                    <p><span class="font-medium">Latitude:</span> {{ place.latitude }}</p>
+                    <p><span class="font-medium">Longitude:</span> {{ place.longitude }}</p>
                 {% endif %}
-                <p><strong>Neighborhood:</strong> {{ place.neighborhood|default:"N/A" }}</p>
-                <p><strong>Community Area:</strong> {{ place.community_area_name|default:"N/A" }}</p>
+                <p><span class="font-medium">Neighborhood:</span> {{ place.neighborhood|default:"N/A" }}</p>
+                <p><span class="font-medium">Community Area:</span> {{ place.community_area_name|default:"N/A" }}</p>
             </div>
         </div>
-        {% for feature in features%}
-        <p>{{ feature }}</p>
-        {% endfor %}
-        {% for feature in features_posts%}
-        <p>{{ feature.user }} says</p>
-        <p>{{ feature.feature }}</p>
-        <p>{{ feature.body_data }}</p>
-        <p>total vote: {{feature.votes.count}}</p>
-        <form method="POST" action="{% url 'handle_vote' place.id %}?feature_id={{feature.id}}">
-            {% csrf_token %}
-            <button type="submit" name="vote" value="upvote" class="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 transition active:scale-110">Upvote</button>
-            <button type="submit" name="vote" value="downvote" class="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-6 font-medium text-neutral-50 transition active:scale-110">Downvote</button>
-        </form>
-        {% endfor %}
-        {% for comment in comments  %}
-        {{comment.body|safe}}
-        
-        {% endfor %}
-
-        <a href="{% url 'comment_form' place.id %}">Post Comment Here</a>
-        <a href="{% url 'feature_form' place.id %}">Post Feature Here</a>
-
+        <div class="mt-6 space-y-4">
+            {% for feature in features %}
+                <p class="p-4 bg-gray-100 rounded">{{ feature }}</p>
+            {% endfor %}
+        </div>
+        <div class="mt-6 space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Features Submission</h2>
+            </div>
+            {% for feature in features_posts %}
+                <div class="p-4 bg-gray-100 rounded">
+                    <p class="font-medium">{{ feature.user }} says:</p>
+                    <p>{{ feature.feature }}</p>
+                    <p>{{ feature.body_data|safe }}</p>
+                    <p class="italic">Total votes: {{ feature.votes.count }}</p>
+                    <form method="POST" action="{% url 'handle_vote' place.id %}?feature_id={{ feature.id }}" class="mt-2 flex space-x-2">
+                        {% csrf_token %}
+                        <button type="submit" name="vote" value="upvote" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Upvote</button>
+                        <button type="submit" name="vote" value="downvote" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Downvote</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mt-6 space-y-4" id="comment-list">
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Comments</h2>
+            </div>
+            {% for comment in comments %}
+                <div class="p-4 bg-gray-50 rounded">
+                <b>User {{ comment.user }} says..</b>
+                    <div>
+                        {{ comment.body|safe }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mt-6 space-x-4">
+            <a href="{% url 'comment_form' place.id %}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Post Comment Here</a>
+            <a href="{% url 'feature_form' place.id %}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Post Feature Here</a>
+        </div>
     </div>
 {% endblock content %}
 
