@@ -19,8 +19,6 @@ class PostFeature(VoteModel, models.Model):
     #     unique_together = ('place', 'feature', 'user')
 
 
-    def total_votes(self):
-        return self.votes.aggregate(total=Sum('value'))['total'] or 0 # pyright: ignore[reportAttributeAccessIssue]
 
     def body_data(self):
         return mark_safe(self.body)
