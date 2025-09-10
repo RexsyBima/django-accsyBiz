@@ -15,6 +15,7 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['places'] = list(Place.objects.values('id','latitude', 'longitude', 'name', 'category'))
-        print(context['places'])    
+        context['places'] = list(Place.objects.values('id','latitude', 'longitude', 'name', 'category', 'features__feature__label'))
+        for place in context['places']:
+            print(place if place['id'] == 1784 else "")
         return context
