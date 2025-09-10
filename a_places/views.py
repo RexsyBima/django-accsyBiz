@@ -13,5 +13,4 @@ class PlaceGetDetail(DetailView):
         context['features'] = context['place'].features.all()
         context['features_posts'] = context['place'].post_features.all()
         context['comments'] = context['place'].post_comments.all()
-        print(context['features_posts'][0].total_votes())
         return  context
