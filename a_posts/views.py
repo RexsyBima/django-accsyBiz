@@ -3,7 +3,7 @@ from vote.models import UP, DOWN
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
 from django.contrib import messages
-from a_places.models import Place
+from a_places.models import Place, PlaceFeature
 from django.shortcuts import get_object_or_404, redirect, render
 from a_posts.models import PostFeature, CommentPlace
 from .forms import PostFeatureForm, CommentPlaceForm
@@ -59,14 +59,9 @@ def vote(request: HttpRequest, pk):
                     return redirect('place_detail', pk=pk)
                 post_feature.votes.up(request.user.id) # pyright: ignore[reportAttributeAccessIssue]
                 messages.success(request, 'Upvote success')
-        # TODO: handle if the post_feature got more than 3 upvotes
-        # # vote, created = PostFeatureVote.objects.get_or_create(post_feature=post_feature, user=request.user)
-        # if created:
-        #     vote.value = value
-        #     vote.save()
-        # else:
-        #     vote.value = value
-        #     vote.save()
-        #     messages.success(request, 'Vote updated successfully.')
+        if post_feature.votes.count() >= 2:
+            data, create = PlaceFeature.objects.get_or_create(place=post_feature.place,feature=post_feature.feature,)
+            if create:
+                messages.success(request, f'This feature has been added to the place features list!')
         return redirect('place_detail', pk=pk)
     return redirect('place_detail', pk=pk)
