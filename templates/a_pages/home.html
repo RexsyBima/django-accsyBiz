@@ -21,7 +21,7 @@
             places.forEach(place => {
                 let marker = L.marker([place.latitude, place.longitude]).addTo(map)
                 const placeDetailUrlPattern = "{% url 'place_detail' 0 %}".replace('0', 'PLACE_ID');
-                marker.bindPopup(`<b>${place.name}</b><br>${place.category}<br>ID: ${place.id}<br><a href="${placeDetailUrlPattern.replace('PLACE_ID', place.id)}" target="_blank">More Info</a>`);
+                marker.bindPopup(`<b>${place.name}</b><br>${place.category}<br>ID: ${place.id}<br><a href="${placeDetailUrlPattern.replace('PLACE_ID', place.id)}" target="_blank">More Info</a><br>${place.features__feature__label}`);
             })
         });
     </script>
