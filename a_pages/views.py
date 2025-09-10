@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from typing import Any
-from django.db.models import Prefetch
 from django.views.generic import TemplateView
-from a_places.models import Place, PlaceFeature
+from a_places.models import Place
 
 # Create your views here.
 
@@ -26,10 +24,12 @@ class Home(TemplateView):
             feature_labels = [pf.feature.label for pf in features] if features else []
             
             place_data.append({
-                'id': place.id,
+                'id': place.id, # pyright: ignore[reportAttributeAccessIssue]
                 'latitude': place.latitude,
                 'longitude': place.longitude,
                 'name': place.name,
+                'address': place.address,
+                'neighborhood': place.neighborhood,
                 'category': place.category,
                 'feature_labels': feature_labels,
             })

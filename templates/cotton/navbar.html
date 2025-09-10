@@ -21,11 +21,14 @@
       <!-- Secondary Navbar items -->
       <div class="hidden md:flex items-center space-x-3">
         {% if user.is_authenticated %}
-          <h1 class="py-2 px-3 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Hi, {{ user.username }}</h1>
-          <a href="/accounts/logout/" class="py-2 px-3 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">Logout</a>
+        <a href="{% url 'profile'%}" class="py-2 px-3 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Hi, {{ user.username }}</a>
+          <form action="{% url 'logout' %}" method="POST" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="py-2 px-3 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">Logout</button>
+          </form>
         {% else %}
-          <a href="/accounts/login/" class="py-2 px-3 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Login</a>
-          <a href="/accounts/signup/" class="py-2 px-3 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">Signup</a>
+          <a href="{% url 'login' %}" class="py-2 px-3 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Login</a>
+          <a href="{% url 'signup' %}" class="py-2 px-3 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">Signup</a>
         {% endif %}
       </div>
       
@@ -57,11 +60,11 @@
       <li><a href="/posts/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Posts</a></li>
       
       {% if user.is_authenticated %}
-        <li><a href="/accounts/profile/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">{{ user.username }}</a></li>
-        <li><a href="/accounts/logout/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Logout</a></li>
+        <li><a href="{% url 'profile' %}" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">{{ user.username }}</a></li>
+        <li><a href="{% url 'logout' %}" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Logout</a></li>
       {% else %}
-        <li><a href="/accounts/login/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Login</a></li>
-        <li><a href="/accounts/signup/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Signup</a></li>
+        <li><a href="{% url 'login' %}" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Login</a></li>
+        <li><a href="{% url 'signup' %}" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Signup</a></li>
       {% endif %}
     </ul>
   </div>

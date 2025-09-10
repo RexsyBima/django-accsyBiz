@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'a_places',
     'a_features',
     'a_posts',
+    'a_users',
     'django_ckeditor_5',
     'django_cotton',
     'vote'
@@ -122,7 +123,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'  # URL to access static files
+
+# Additional directories for static files
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # This points to the 'static/' directory in your project root
+]
+
+# For production, specify the directory to collect all static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

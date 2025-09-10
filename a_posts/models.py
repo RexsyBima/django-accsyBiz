@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Sum
 from django.utils.safestring import mark_safe
 from django_ckeditor_5.fields import CKEditor5Field
 from a_features.models import Feature

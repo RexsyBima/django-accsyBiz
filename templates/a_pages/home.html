@@ -1,6 +1,13 @@
 {% extends "base.html" %}
     {% block content %}
     <div class="container mx-auto px-4 py-8">
+        {% if messages %}
+            <ul class="mb-4">
+                {% for message in messages %}
+                    <li class="p-2 rounded {{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome to AccsyBiz</h1>
         <p class="text-gray-600 mb-8">Find accessible businesses in Chicago</p>
         
@@ -17,9 +24,10 @@
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
+
             
             places.forEach(place => {
-                let marker = L.marker([place.latitude, place.longitude]).addTo(map)
+                let marker = L.marker([place.latitude, place.longitude], {title: place.name + " | " + place.address}).addTo(map)
                 const placeDetailUrlPattern = "{% url 'place_detail' 0 %}".replace('0', 'PLACE_ID');
                 
                 // Create feature list
@@ -30,6 +38,21 @@
                 
                 marker.bindPopup(`<b>${place.name}</b><br>${place.category}<br>ID: ${place.id}<br><a href="${placeDetailUrlPattern.replace('PLACE_ID', place.id)}" target="_blank">More Info</a>${featuresList}`);
             })
+
+            // PinSearch component
+            var searchBar = L.control.pinSearch({
+                position: 'topright',
+                placeholder: 'Search...',
+                buttonText: 'Search',
+                onSearch: function(query) {
+                    console.log('Search query:', query);
+                    // Handle the search query here
+                },
+                searchBarWidth: '200px',
+                searchBarHeight: '30px',
+                maxSearchResults: 10
+            }).addTo(map);
+
         });
     </script>
     {% endblock %}

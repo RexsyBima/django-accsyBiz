@@ -1,6 +1,5 @@
 from django.http import HttpRequest, HttpResponseBadRequest
 from vote.models import UP, DOWN
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required 
 from django.contrib import messages
 from a_places.models import Place, PlaceFeature
@@ -8,7 +7,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from a_posts.models import PostFeature, CommentPlace
 from .forms import PostFeatureForm, CommentPlaceForm
 from django.shortcuts import render
-from django.views.generic import CreateView
 
 # Create your views here.
 
@@ -19,7 +17,7 @@ def comment_form(request: HttpRequest, pk):
         data.instance.user = request.user
         data.instance.place = get_object_or_404(Place, pk=pk)
         if data.is_valid():
-            obj = data.save(commit=True)
+            data.save(commit=True)
             messages.success(request, 'Your comment has been posted successfully.')
             return redirect('place_detail', pk=pk)
     form = CommentPlaceForm()
@@ -35,7 +33,7 @@ def feature_form(request : HttpRequest, pk):
         data.instance.user = request.user
         data.instance.place = get_object_or_404(Place, pk=pk)
         if data.is_valid():
-            obj = data.save(commit=True)
+            data.save(commit=True)
             messages.success(request, 'Your feature has been posted successfully.')
             return redirect('place_detail', pk=pk)
     form = PostFeatureForm()
@@ -62,7 +60,7 @@ def vote(request: HttpRequest, pk):
                 post_feature.votes.up(request.user.id) # pyright: ignore[reportAttributeAccessIssue]
                 messages.success(request, 'Upvote success')
         if post_feature.votes.count() >= 2:
-            data, create = PlaceFeature.objects.get_or_create(place=post_feature.place,feature=post_feature.feature,)
+            _, create = PlaceFeature.objects.get_or_create(place=post_feature.place,feature=post_feature.feature,)
             if create:
                 messages.success(request, f'This feature has been added to the place features list!')
         return redirect('place_detail', pk=pk)
