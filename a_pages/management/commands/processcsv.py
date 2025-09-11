@@ -3,6 +3,7 @@ from a_places.models import Place
 import polars as pl
 
 
+
 class Command(BaseCommand):
     help = "Closes the specified poll for voting"
 
