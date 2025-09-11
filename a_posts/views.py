@@ -1,4 +1,5 @@
 from django.http import HttpRequest, HttpResponseBadRequest
+from django.views.generic import ListView
 from vote.models import UP, DOWN
 from django.contrib.auth.decorators import login_required 
 from django.contrib import messages
@@ -9,6 +10,15 @@ from .forms import PostFeatureForm, CommentPlaceForm
 from django.shortcuts import render
 
 # Create your views here.
+#
+class PostFeatureListView(ListView):
+    model = PostFeature
+    template_name = 'a_posts/postfeature_list.html'
+    context_object_name = 'post_features'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return PostFeature.objects.select_related('user', 'place').order_by('-created_at')
 
 @login_required
 def comment_form(request: HttpRequest, pk):
@@ -21,8 +31,11 @@ def comment_form(request: HttpRequest, pk):
             messages.success(request, 'Your comment has been posted successfully.')
             return redirect('place_detail', pk=pk)
     form = CommentPlaceForm()
+    place = Place.objects.get(pk=pk)
     context = {
         'form': form,
+        'place': place,
+        'detail' : 'Submit Comment'
     }
     return render(request, 'a_posts/feature_form.html', context)
 
@@ -37,8 +50,11 @@ def feature_form(request : HttpRequest, pk):
             messages.success(request, 'Your feature has been posted successfully.')
             return redirect('place_detail', pk=pk)
     form = PostFeatureForm()
+    place = Place.objects.get(pk=pk)
     context = {
         'form': form,
+        'place': place,
+        'detail' : 'Submit Feature'
     }
     return render(request, 'a_posts/feature_form.html', context)
 

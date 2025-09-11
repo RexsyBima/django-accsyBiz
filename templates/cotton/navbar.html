@@ -11,10 +11,8 @@
         
         <!-- Primary Navbar items -->
         <div class="hidden md:flex items-center space-x-1">
-          <a href="/" class="py-4 px-2 text-green-500 border-b-2 border-green-500 font-semibold">Home</a>
-          <a href="/places/" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Places</a>
-          <a href="/features/" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Features</a>
-          <a href="/posts/" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Posts</a>
+          <a href="/" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Home</a>
+          <a href="{% url 'PostFeatureListView' %}" class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Latest Submission</a>
         </div>
       </div>
       
@@ -54,10 +52,8 @@
   <!-- Mobile Menu -->
   <div class="hidden mobile-menu">
     <ul class="">
-      <li><a href="/" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
-      <li><a href="/places/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Places</a></li>
-      <li><a href="/features/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Features</a></li>
-      <li><a href="/posts/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Posts</a></li>
+      <li><a href="/" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Home</a></li>
+      <li><a href="{% url 'PostFeatureListView' %}" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Latest Submission</a></li>
       
       {% if user.is_authenticated %}
         <li><a href="{% url 'profile' %}" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">{{ user.username }}</a></li>

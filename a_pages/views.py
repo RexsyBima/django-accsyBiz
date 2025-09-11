@@ -2,12 +2,6 @@ from typing import Any
 from django.views.generic import TemplateView
 from a_places.models import Place
 
-# Create your views here.
-
-# class A_Pages:
-#     class Home(TemplateView):
-#         template_name = 'a_pages/home.html'
-
 
 class Home(TemplateView):
     template_name = 'a_pages/home.html'
@@ -24,8 +18,8 @@ class Home(TemplateView):
             feature_labels = [pf.feature.label for pf in features] if features else []
             
             place_data.append({
-                'id': place.id, # pyright: ignore[reportAttributeAccessIssue]
                 'latitude': place.latitude,
+                'id': place.id, # pyright: ignore[reportAttributeAccessIssue]
                 'longitude': place.longitude,
                 'name': place.name,
                 'address': place.address,

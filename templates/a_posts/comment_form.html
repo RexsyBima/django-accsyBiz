@@ -6,10 +6,16 @@
 {% endblock header %}
 
 {% block content %}
-    hello world
-    <form method="POST">
+    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit article">
+        <div class="mb-4">
+            {{ form.non_field_errors }}
+        </div>
+        <div class="mb-4">
+            {{ form.as_p }}
+        </div>
+        <div class="flex items-center justify-between">
+            <input type="submit" value="Submit article" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        </div>
     </form>
 {% endblock content %}

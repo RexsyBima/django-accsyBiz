@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'a_users',
     'django_ckeditor_5',
     'django_cotton',
-    'vote'
+    'vote',
+    "django_autotyping",
 ]
 
 MIDDLEWARE = [

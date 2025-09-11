@@ -6,10 +6,38 @@
 {% endblock header %}
 
 {% block content %}
-    hello world
-    <form method="POST">
+        <h1 class="text-3xl font-bold mb-6">{{ place.name }}</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <p><span class="font-medium">Legal Name:</span> {{ place.legal_name|default:"N/A" }}</p>
+                <p><span class="font-medium">Business Activity:</span> {{ place.business_category|default:"N/A" }}</p>
+                <p><span class="font-medium">Address:</span> {{ place.address|default:"N/A" }}</p>
+                <p><span class="font-medium">City:</span> {{ place.city }}</p>
+                <p><span class="font-medium">State:</span> {{ place.state }}</p>
+                <p><span class="font-medium">ZIP Code:</span> {{ place.zip_code|default:"N/A" }}</p>
+                <p><span class="font-medium">Category:</span> {{ place.category|default:"N/A" }}</p>
+                <p><span class="font-medium">License Status:</span> {{ place.license_status|default:"N/A" }}</p>
+            </div>
+            <div class="space-y-4">
+                {% if place.latitude and place.longitude %}
+                    <p><span class="font-medium">Latitude:</span> {{ place.latitude }}</p>
+                    <p><span class="font-medium">Longitude:</span> {{ place.longitude }}</p>
+                {% endif %}
+                <p><span class="font-medium">Neighborhood:</span> {{ place.neighborhood|default:"N/A" }}</p>
+                <p><span class="font-medium">Community Area:</span> {{ place.community_area_name|default:"N/A" }}</p>
+            </div>
+        </div>
+        <h1 class="mt-6 text-3xl font-bold ">{{ detail }}</h1>
+    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit article">
+        <div class="mb-4">
+            {{ form.non_field_errors }}
+        </div>
+        <div class="mb-4">
+            {{ form.as_p }}
+        </div>
+        <div class="flex items-center justify-between">
+            <input type="submit" value="Submit article" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        </div>
     </form>
 {% endblock content %}
