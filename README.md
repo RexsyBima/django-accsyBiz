@@ -75,8 +75,7 @@ AccsyBiz addresses the challenge of finding accessible businesses in Chicago. Wh
    uv sync
    ```
 
-4. Download the Chicago business license data from the [Chicago Data Portal](https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses-Current-Active-Map/e4sp-itvq)
-) and place it in the project directory.
+4. Download the Chicago business license data from the [Chicago Data Portal](https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses-Current-Active-Map/e4sp-itvq) and place it in the project directory, the filename should be `Business_Licenses_-_Current_Active_20250908.csv`.
 
 ### Running the Application
 
@@ -92,13 +91,22 @@ AccsyBiz addresses the challenge of finding accessible businesses in Chicago. Wh
    python manage.py createsuperuser
    ```
 
-3. Run the development server:
+3. Run some django commands:
+
+   ```bash
+   python manage.py fillfeatures # To fill initial accessibility features, brailee menu etc
+   python manage.py processcsv # To fill the database with business data from the CSV file Business_Licenses_-_Current_Active_20250908.csv
+   ```
+
+   ```
+
+4. Run the development server:
 
    ```bash
    python manage.py runserver
    ```
 
-4. Visit `http://127.0.0.1:8000` in your browser
+5. Visit `http://127.0.0.1:8000` in your browser
 
 ## Project Structure
 
