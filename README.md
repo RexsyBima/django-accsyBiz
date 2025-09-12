@@ -1,6 +1,6 @@
 # AccsyBiz - Accessible Business Finder
 
-AccsyBiz is a Django web application that helps users find accessible businesses in Chicago. The application uses business license data from the Chicago Data Portal to provide information about business locations and their accessibility features.
+AccsyBiz is a Django web application that helps users find accessible businesses in Chicago. The application uses business license data from the Chicago Data Portal to provide information about business locations and their accessibility features. In order for accessibility information to be displayed, users can contribute by posting about the accessibility features of businesses, which are then validated through a voting system, for sake of the demo, the features need at least  2 vote to be accepted.
 
 ## Table of Contents
 
